@@ -466,3 +466,132 @@ type SanitizationRule struct {
 	Replace string
 }
 ```
+
+
+# MFT Utils
+
+MFT Utils is a Go package providing a set of utility functions for file and directory management. This package includes functions for copying, moving, deleting, reading, and writing files and directories, as well as other file-related operations.
+
+## Installation
+
+To use the MFT Utils package, you need to install it using `go get`:
+
+```sh
+go get github.com/yourusername/mftutils
+```
+
+Then import it in your Go code:
+
+```go
+import "github.com/yourusername/mftutils"
+```
+
+## Functions
+
+### File Operations
+
+- `CopyFile(src, dst string) error`
+    - Copies a file from `src` to `dst`.
+
+- `DeleteFile(filePath string) error`
+    - Deletes a file at `filePath`.
+
+- `ReadFile(filePath string) (string, error)`
+    - Reads the content of a file and returns it as a string.
+
+- `WriteFile(filePath, content string) error`
+    - Writes the provided content to a file.
+
+- `ListFilesWithExtension(directoryPath, extension string) ([]string, error)`
+    - Lists all files with the specified extension in a directory.
+
+- `MoveFile(src, dst string) error`
+    - Moves a file from `src` to `dst`.
+
+- `CompareFiles(file1, file2 string) (bool, error)`
+    - Compares the content of two files and returns whether they are the same.
+
+- `GetFileModificationTime(filePath string) (time.Time, error)`
+    - Returns the last modification time of a file.
+
+- `SetFileModificationTime(filePath string, modTime time.Time) error`
+    - Sets the last modification time of a file.
+
+- `CalculateFileSize(filePath string) (int64, error)`
+    - Returns the size of a file in bytes.
+
+- `CheckFileExists(filePath string) bool`
+    - Checks if a file exists.
+
+- `GetAbsolutePath(filePath string) (string, error)`
+    - Returns the absolute path of a file.
+
+### Directory Operations
+
+- `CopyDirectory(src, dst string) error`
+    - Recursively copies a directory from `src` to `dst`.
+
+- `ListSubdirectories(directoryPath string) ([]string, error)`
+    - Lists all subdirectories in a directory.
+
+- `MoveDirectory(src, dst string) error`
+    - Moves a directory from `src` to `dst`.
+
+- `CreateTempDirectory(prefix string) (string, error)`
+    - Creates a temporary directory with the given prefix.
+
+### File Extension Operations
+
+- `GetFileExtension(filePath string) string`
+    - Returns the file extension.
+
+- `ChangeFileExtension(filePath, newExtension string) (string, error)`
+    - Changes the file extension.
+
+### File Content Operations
+
+- `ReadFileAsBytes(filePath string) ([]byte, error)`
+    - Reads the content of a file as bytes.
+
+- `WriteFileFromBytes(filePath string, data []byte) error`
+    - Writes bytes to a file.
+
+## Usage Example
+
+```go
+package main
+
+import (
+    "fmt"
+    "github.com/yourusername/mftutils"
+)
+
+func main() {
+    utils := mftutils.MFTUtils{}
+    
+    // Copy a file
+    err := utils.CopyFile("source.txt", "destination.txt")
+    if err != nil {
+        fmt.Println("Error copying file:", err)
+    }
+
+    // Read a file
+    content, err := utils.ReadFile("destination.txt")
+    if err != nil {
+        fmt.Println("Error reading file:", err)
+    } else {
+        fmt.Println("File content:", content)
+    }
+    
+    // Other operations...
+}
+```
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Author
+
+[Venkateswara Rao T](https://github.com/madhu72)
+```
