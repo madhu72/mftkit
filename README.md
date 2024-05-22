@@ -563,11 +563,11 @@ package main
 
 import (
     "fmt"
-    "github.com/yourusername/mftutils"
+    "github.com/madhu72/mftkit/mft"
 )
 
 func main() {
-    utils := mftutils.MFTUtils{}
+    utils := mft.MFT{}
     
     // Copy a file
     err := utils.CopyFile("source.txt", "destination.txt")
