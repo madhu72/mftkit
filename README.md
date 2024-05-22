@@ -1,4 +1,3 @@
-```markdown
 # MFT Library Documentation
 
 ## Overview
@@ -11,6 +10,7 @@ Encrypts a file using AES.
 ```go
 func (m *MFT) EncryptFile(inputPath, outputPath, key string) error
 ```
+
 
 ### DecryptFile
 Decrypts a file using AES.
@@ -465,5 +465,4 @@ type SanitizationRule struct {
 	Search  string
 	Replace string
 }
-```
 ```
