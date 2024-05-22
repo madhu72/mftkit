@@ -1,5 +1,23 @@
 # MFT Library Documentation
 
+# MFTKIT
+
+MFTKIT is a Go package providing a set of utility functions for file and directory management. This package includes functions for copying, moving, deleting, reading, and writing files and directories, as well as other file-related operations.
+
+## Installation
+
+To use the MFTKIT package, you need to install it using `go get`:
+
+```sh
+go get github.com/madhu72/mftkit
+```
+
+Then import it in your Go code:
+
+```go
+import "github.com/madhu72/mftkit/mft"
+```
+
 ## Overview
 The MFT library provides various functionalities for file management, including encryption, compression, splitting, merging, uploading, downloading, monitoring, and more. This documentation covers all the available methods and their usage.
 
@@ -465,25 +483,6 @@ type SanitizationRule struct {
 	Search  string
 	Replace string
 }
-```
-
-
-# MFTKIT
-
-MFTKIT is a Go package providing a set of utility functions for file and directory management. This package includes functions for copying, moving, deleting, reading, and writing files and directories, as well as other file-related operations.
-
-## Installation
-
-To use the MFTKIT package, you need to install it using `go get`:
-
-```sh
-go get github.com/madhu72/mftkit
-```
-
-Then import it in your Go code:
-
-```go
-import "github.com/madhu72/mftkit/mft"
 ```
 
 ## Functions
