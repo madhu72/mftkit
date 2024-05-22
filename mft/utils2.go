@@ -1,6 +1,8 @@
 package mft
 
 import (
+	"github.com/fsnotify/fsnotify"
+	"io"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -156,4 +158,111 @@ func (m *MFT) CreateTempDirectory(prefix string) (string, error) {
 // MoveDirectory moves a directory from src to dst.
 func (m *MFT) MoveDirectory(src, dst string) error {
 	return os.Rename(src, dst)
+}
+
+func (m *MFT) CreateFile(filePath string) (*os.File, error) {
+	return os.Create(filePath)
+}
+
+// AppendToFile appends content to a file.
+func (m *MFT) AppendToFile(filePath, content string) error {
+	file, err := os.OpenFile(filePath, os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	_, err = file.WriteString(content)
+	return err
+}
+
+// ListAllFiles lists all files in a directory and its subdirectories.
+func (m *MFT) ListAllFiles(directoryPath string) ([]string, error) {
+	var files []string
+	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files, err
+}
+
+// CalculateDirectorySize calculates the total size of a directory.
+func (m *MFT) CalculateDirectorySize(directoryPath string) (int64, error) {
+	var totalSize int64
+	err := filepath.Walk(directoryPath, func(_ string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			totalSize += info.Size()
+		}
+		return nil
+	})
+	return totalSize, err
+}
+
+// FindFilesByName finds files with a specific name in a directory and its subdirectories.
+func (m *MFT) FindFilesByName(directoryPath, fileName string) ([]string, error) {
+	var files []string
+	err := filepath.Walk(directoryPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() && info.Name() == fileName {
+			files = append(files, path)
+		}
+		return nil
+	})
+	return files, err
+}
+
+// ReplaceStringInFile replaces all occurrences of oldString with newString in a file.
+func (m *MFT) ReplaceStringInFile(filePath, oldString, newString string) error {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+	content := strings.ReplaceAll(string(data), oldString, newString)
+	return os.WriteFile(filePath, []byte(content), 0644)
+}
+
+// IsEmptyDirectory checks if a directory is empty.
+func (m *MFT) IsEmptyDirectory(directoryPath string) (bool, error) {
+	f, err := os.Open(directoryPath)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+	_, err = f.Readdir(1)
+	if err == io.EOF {
+		return true, nil
+	}
+	return false, err
+}
+
+// WatchDirectory watches a directory for changes.
+func (m *MFT) WatchDirectory(directoryPath string, callback func(event fsnotify.Event)) error {
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		return err
+	}
+	defer watcher.Close()
+
+	err = watcher.Add(directoryPath)
+	if err != nil {
+		return err
+	}
+
+	for {
+		select {
+		case event := <-watcher.Events:
+			callback(event)
+		case err := <-watcher.Errors:
+			return err
+		}
+	}
 }
