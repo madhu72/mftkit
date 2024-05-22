@@ -1,4 +1,4 @@
-module mftkit
+module github.com/madhu72/mftkit
 
 go 1.22
 

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/madhu72/mftkit/mft"
 	"io"
 	"log"
-	"mftkit/mft"
 	"net/http"
 	"os"
 	"path/filepath"
