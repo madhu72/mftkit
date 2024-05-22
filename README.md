@@ -539,6 +539,21 @@ type SanitizationRule struct {
 - `CreateTempDirectory(prefix string) (string, error)`
     - Creates a temporary directory with the given prefix.
 
+- `ListAllFiles(directoryPath string) ([]string, error)`
+  - Lists all files in a directory and its subdirectories.
+
+- `CalculateDirectorySize(directoryPath string) (int64, error)`
+  - Calculates the total size of a directory.
+
+- `FindFilesByName(directoryPath, fileName string) ([]string, error)`
+  - Finds files with a specific name in a directory and its subdirectories.
+
+- `IsEmptyDirectory(directoryPath string) (bool, error)`
+  - Checks if a directory is empty.
+
+- `WatchDirectory(directoryPath string, callback func(event fsnotify.Event)) error`
+  - Watches a directory for changes.
+  - 
 ### File Extension Operations
 
 - `GetFileExtension(filePath string) string`
@@ -554,6 +569,7 @@ type SanitizationRule struct {
 
 - `WriteFileFromBytes(filePath string, data []byte) error`
     - Writes bytes to a file.
+
 
 ## Usage Example
 
